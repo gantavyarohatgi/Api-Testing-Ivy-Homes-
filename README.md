@@ -47,6 +47,16 @@ The API provides autocomplete suggestions based on input prefixes. It operates a
 
 ---
 
+## Tools Used
+
+1. **Postman
+   - For easily testing the API, such as adding parameter to test its boundaries.
+  
+2. **Google Colab
+   - Simple to run the script written and check the outputs.
+  
+---
+
 ### Sample Request:
 ```bash
 curl "http://35.200.185.69:8000/v1/autocomplete?query=aa&max_results=50"
