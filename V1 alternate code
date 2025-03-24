@@ -1,0 +1,42 @@
+import requests
+import string
+import time
+
+BASE_URL = "http://35.200.185.69:8000/v1/autocomplete?query="
+
+
+
+def extract_names(prefix=""):
+    """Recursively extract all names by querying the API with different prefixes."""
+    # Query the API with the current prefix
+    response = requests.get(BASE_URL + prefix + '&max_results=1000')
+    data = response.json()
+
+    print(data['results'])
+
+    if(data['count'] == 50):
+      character = data['results'][49][1]
+      extract_names(prefix + character)
+      time.sleep(0.2)
+
+
+
+    # Stop recursion if the results are empty or the prefix has been fully searched
+    if len(data.get("results", [])) == 0:
+        return
+
+
+def main():
+    print("Extracting all possible names from the autocomplete system...")
+    ''' extract_names("")  # Start the recursive search from an empty prefix '''
+
+    # Recursively explore further by adding each letter (a-z) to the current prefix
+    for char1 in string.ascii_lowercase:
+      for char2 in string.ascii_lowercase:
+        extract_names(char1 + char2)
+
+        # Optional: Wait between queries to prevent overloading the API
+        time.sleep(0.2)
+
+if __name__ == "__main__":
+    main()
